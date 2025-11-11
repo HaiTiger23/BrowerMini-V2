@@ -1,0 +1,33 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root { color-scheme: dark; }
+
+html, body, #root { height: 100%; }
+html, body { margin: 0; padding: 0; }
+body { 
+  font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, Noto Sans, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+}
+
+/***** Glass *****/
+.glass {
+  background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 8px 24px rgba(0,0,0,0.35), inset 0 1px 0 rgba(255,255,255,0.04);
+  backdrop-filter: blur(8px);
+}
+
+/* Frameless window drag regions */
+.drag { -webkit-app-region: drag; }
+.no-drag { -webkit-app-region: no-drag; }
+
+/***** Resize friendly *****/
+.icon-btn { @apply p-0.5 sm:p-1 rounded-md hover:bg-white/5 active:scale-95 transition; }
+.icon-btn, button, a { -webkit-app-region: no-drag; }
+.input {
+  @apply bg-transparent border border-border rounded-md px-2 py-0 text-xs focus:outline-none focus:ring-1 focus:ring-white/20 w-full placeholder:text-white/40;
+}
+.input, input { -webkit-app-region: no-drag; }
+.tab-chip { @apply px-1 py-[1px] rounded bg-white/5 hover:bg-white/10 border border-border text-[10px] truncate max-w-[110px]; }
+.tab-chip { -webkit-app-region: no-drag; }
