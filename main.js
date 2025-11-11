@@ -67,13 +67,14 @@ function bringToFront(win) {
   setTimeout(() => { if (!wasAOT) try { win.setAlwaysOnTop(false) } catch {} }, 500)
 }
 
-function fadeIn(win, onDone) {
+function fadeIn(win, onDone, targetOpacity = 1) {
+  const target = Math.max(0.2, Math.min(1, Number(targetOpacity) || 1))
   win.setOpacity(0)
   bringToFront(win)
   let o = 0
   const id = setInterval(() => {
     o += 0.08
-    if (o >= 1) { o = 1; clearInterval(id); try { onDone && onDone() } catch {} }
+    if (o >= target) { o = target; clearInterval(id); try { onDone && onDone() } catch {} }
     win.setOpacity(o)
   }, 16)
 }
@@ -87,7 +88,8 @@ function toggleShow() {
   } else {
     const s = loadWindowState()
     win.setBounds(s)
-    fadeIn(win, () => { try { tabManager?.refreshActiveBounds() } catch {} })
+    const target = loadOpacity()
+    fadeIn(win, () => { try { tabManager?.refreshActiveBounds() } catch {} }, target)
   }
 }
 
