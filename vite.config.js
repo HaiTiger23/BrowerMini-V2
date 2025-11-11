@@ -5,6 +5,7 @@ import path from 'path'
 export default defineConfig(({ command }) => ({
   root: path.resolve(__dirname, 'src/ui'),
   plugins: [react()],
+  base: command === 'build' ? './' : '/',
   server: {
     port: 5173,
     strictPort: true,

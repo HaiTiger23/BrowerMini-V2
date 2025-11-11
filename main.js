@@ -94,7 +94,9 @@ function toggleShow() {
 function createTray() {
   let img
   try {
-    const iconPath = path.join(__dirname, 'assets', 'icons', 'icon.png')
+    const iconPath = process.platform === 'win32'
+      ? path.join(__dirname, 'assets', 'icons', 'win', 'icon.ico')
+      : path.join(__dirname, 'assets', 'icons', 'png', '256x256.png')
     img = nativeImage.createFromPath(iconPath)
     if (img.isEmpty()) img = nativeImage.createEmpty()
   } catch {
@@ -102,8 +104,11 @@ function createTray() {
   }
   tray = new Tray(img)
   tray.setToolTip('BroMin')
+  const openFromTray = () => { if (win) { if (!win.isVisible()) toggleShow(); else win.focus() } }
+  tray.on('click', openFromTray)
+  tray.on('double-click', openFromTray)
   const contextMenu = Menu.buildFromTemplate([
-    { label: 'Open', click: () => { if (win) { if (!win.isVisible()) toggleShow(); else win.focus() } } },
+    { label: 'Open', click: openFromTray },
     { type: 'separator' },
     { label: 'Quit', click: () => app.quit() },
   ])
@@ -112,7 +117,7 @@ function createTray() {
 
 function registerShortcuts() {
   // Chỉ giữ hotkey hệ thống để ẩn/hiện
-  try { globalShortcut.register('Shift+Z+Space', toggleShow) } catch {}
+  try { globalShortcut.register('Shift+Space', toggleShow) } catch {}
 }
 
 function createWindow() {
@@ -127,6 +132,9 @@ function createWindow() {
     backgroundColor: '#0b0e13',
     alwaysOnTop: !!aot,
     useContentSize: true,
+    icon: process.platform === 'win32'
+      ? path.join(__dirname, 'assets', 'icons', 'win', 'icon.ico')
+      : path.join(__dirname, 'assets', 'icons', 'png', '256x256.png'),
     webPreferences: {
       preload: path.join(__dirname, 'src', 'preload.cjs'),
       nodeIntegration: false,

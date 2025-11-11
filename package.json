@@ -29,12 +29,24 @@
     "asar": false,
     "win": {
       "target": ["nsis"],
-      "icon": "assets/icons/icon.png"
+      "icon": "assets/icons/win/icon.ico"
+    },
+    "nsis": {
+      "oneClick": true,
+      "perMachine": false,
+      "installerIcon": "assets/icons/win/icon.ico",
+      "uninstallerIcon": "assets/icons/win/icon.ico",
+      "installerHeaderIcon": "assets/icons/win/icon.ico",
+      "allowToChangeInstallationDirectory": false
     },
     "mac": {
       "target": ["dmg", "zip"],
       "category": "public.app-category.productivity",
-      "icon": "assets/icons/icon.png"
+      "icon": "assets/icons/mac/icon.icns"
+    },
+    "linux": {
+      "target": ["AppImage", "deb"],
+      "icon": "assets/icons/png"
     },
     "extraResources": [
       {
